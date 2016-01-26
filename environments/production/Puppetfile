@@ -1,0 +1,11 @@
+mod 'stdlib',
+  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib.git',
+  :tag => '4.11.0'
+
+mod 'apt',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apt.git',
+  :tag => '2.2.1'
+
+mod 'mesos',
+  :git => 'https://github.com/deric/puppet-mesos.git',
+  :tag => 'v0.6.4'

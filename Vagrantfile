@@ -1,14 +1,19 @@
-$agent_gui=false
-$agent_memory='1024'
-$agent_cpus='1'
-
 # If you change the base network you will need to update the hosts script in
 # the scripts folder
 $base_network='192.168.11'
 
-# If you change the number of agents you will need to update the hosts script
-# in the scripts folder
-$num_agents=3
+$agent_gui=false
+$agent_memory='1024'
+$agent_cpus='1'
+$agent_num=3
+
+$master_gui=false
+$master_memory='1024'
+$master_cpus='1'
+
+# If you edit the number of masters, it will need to be reflected in the 
+# environments/production/manifests/mesosmaster.pp file
+$master_num=3
 
 Vagrant.configure(2) do |config|
 
@@ -20,29 +25,40 @@ Vagrant.configure(2) do |config|
   config.r10k.puppetfile_path = "environments/production/Puppetfile"
   config.r10k.module_path = "environments/production/modules"
 
-# Master Configuration
-  config.vm.define "master" do |master_config|
-    master_config.vm.host_name = "master"
+# Create masters
+  (1..$master_num).each do |i|
+    config.vm.define vm_name = "master%02d" % i do |master_config|
+      master_config.vm.hostname = vm_name
 
-    master_config.vm.provider :virtualbox do |vb|
-        vb.gui = false
-        vb.memory = '4096'
-        vb.cpus = '1'
+      ["vmware_fusion", "vmware_workstation"].each do |vmware|
+        master_config.vm.provider vmware do |v|
+          v.gui = $master_gui
+          v.vmx['memsize'] = $master_memory
+          v.vmx['numvcpus'] = $master_cpus
+        end
+      end
+
+      master_config.vm.provider :virtualbox do |vb|
+        vb.gui = $master_gui
+        vb.memory = $master_memory
+        vb.cpus = $master_cpus
+      end
+
+      ip = $base_network+".#{i}"
+      master_config.vm.network :private_network, ip: ip
+
+      master_config.vm.provision "puppet" do |puppet|
+        puppet.environment = "production"
+        puppet.environment_path = "environments"
+        puppet.manifests_path = "./environments/production/manifests"
+        puppet.manifest_file = "mesosmaster.pp"
+      end
+
     end
-
-    master_config.vm.network "private_network", ip: $base_network+".10"
-
-    master_config.vm.provision "puppet" do |puppet|
-      puppet.environment = "production"
-      puppet.environment_path = "environments"
-      puppet.manifests_path = "./environments/production/manifests"
-      puppet.manifest_file = "mesosmaster.pp"
-    end
-
-  end #End Master Configuration
-
+  end # End masters' Configuration
+  
 # Create Agents
-  (1..$num_agents).each do |i|
+  (1..$agent_num).each do |i|
     config.vm.define vm_name = "agent%02d" % i do |agent_config|
       agent_config.vm.hostname = vm_name
 
@@ -67,11 +83,7 @@ Vagrant.configure(2) do |config|
         puppet.environment = "production"
         puppet.environment_path = "environments"
         puppet.manifests_path = "./environments/production/manifests"
-        puppet.manifest_file = "default.pp"
-      end
-
-      agent_config.vm.provision "puppet_server" do |puppet|
-        puppet.options = "-t"
+        puppet.manifest_file = "mesosslave.pp"
       end
 
     end
