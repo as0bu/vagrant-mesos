@@ -9,3 +9,11 @@ mod 'apt',
 mod 'mesos',
   :git => 'https://github.com/deric/puppet-mesos.git',
   :tag => 'v0.6.4'
+
+mod 'datacat',
+  :git => 'https://github.com/richardc/puppet-datacat.git',
+  :tag => '0.6.2'
+
+mod 'zookeeper',
+  :git => 'https://github.com/deric/puppet-zookeeper.git',
+  :tag => 'v0.4.2'
