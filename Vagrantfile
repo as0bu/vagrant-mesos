@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
         vb.cpus = $master_cpus
       end
 
-      ip = $base_network+".#{i}"
+      ip = $base_network+".#{i+10}"
       master_config.vm.network :private_network, ip: ip
 
       master_config.vm.provision "puppet" do |puppet|

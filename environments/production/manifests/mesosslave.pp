@@ -3,7 +3,7 @@ class{'mesos':
 }
 
 class{'mesos::slave':
-  zookeeper  => 'zk://192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181/mesos',
+  zookeeper  => 'zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos',
   listen_address => $::ipaddress_eth1,
   attributes => {
     'env' => 'production',
