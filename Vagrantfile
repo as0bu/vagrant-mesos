@@ -2,10 +2,10 @@
 # the scripts folder
 $base_network='192.168.11'
 
-$agent_gui=false
-$agent_memory='1024'
-$agent_cpus='1'
-$agent_num=3
+$slave_gui=false
+$slave_memory='1024'
+$slave_cpus='1'
+$slave_num=3
 
 $master_gui=false
 $master_memory='1024'
@@ -25,7 +25,7 @@ Vagrant.configure(2) do |config|
   config.r10k.puppetfile_path = "environments/production/Puppetfile"
   config.r10k.module_path = "environments/production/modules"
 
-# Create masters
+# Create Masters
   (1..$master_num).each do |i|
     config.vm.define vm_name = "master%02d" % i do |master_config|
       master_config.vm.hostname = vm_name
@@ -55,31 +55,31 @@ Vagrant.configure(2) do |config|
       end
 
     end
-  end # End masters' Configuration
+  end # End Masters' Configuration
   
-# Create Agents
-  (1..$agent_num).each do |i|
-    config.vm.define vm_name = "agent%02d" % i do |agent_config|
-      agent_config.vm.hostname = vm_name
+# Create Slaves
+  (1..$slave_num).each do |i|
+    config.vm.define vm_name = "slave%02d" % i do |slave_config|
+      slave_config.vm.hostname = vm_name
 
       ["vmware_fusion", "vmware_workstation"].each do |vmware|
-        agent_config.vm.provider vmware do |v|
-          v.gui = $agent_gui
-          v.vmx['memsize'] = $agent_memory
-          v.vmx['numvcpus'] = $agent_cpus
+        slave_config.vm.provider vmware do |v|
+          v.gui = $slave_gui
+          v.vmx['memsize'] = $slave_memory
+          v.vmx['numvcpus'] = $slave_cpus
         end
       end
 
-      agent_config.vm.provider :virtualbox do |vb|
-        vb.gui = $agent_gui
-        vb.memory = $agent_memory
-        vb.cpus = $agent_cpus
+      slave_config.vm.provider :virtualbox do |vb|
+        vb.gui = $slave_gui
+        vb.memory = $slave_memory
+        vb.cpus = $slave_cpus
       end
 
       ip = $base_network+".#{i+100}"
-      agent_config.vm.network :private_network, ip: ip
+      slave_config.vm.network :private_network, ip: ip
 
-      agent_config.vm.provision "puppet" do |puppet|
+      slave_config.vm.provision "puppet" do |puppet|
         puppet.environment = "production"
         puppet.environment_path = "environments"
         puppet.manifests_path = "./environments/production/manifests"
@@ -87,5 +87,5 @@ Vagrant.configure(2) do |config|
       end
 
     end
-  end # End Agents' Configuration
+  end # End Slaves' Configuration
 end
