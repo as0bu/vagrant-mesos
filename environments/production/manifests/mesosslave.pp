@@ -1,5 +1,20 @@
+class {'apt':
+  proxy   => {
+    host => '192.168.11.11',
+    port => '3142',
+  },
+  notify  => Exec['apt update'],
+}
+
+exec { 'apt update':
+  command     => 'apt-get update',
+  refreshonly => true,
+  path        => '/usr/bin',
+}
+
 class{'mesos':
-  repo => 'mesosphere',
+  repo    => 'mesosphere',
+  require => Exec['apt update'],
 }
 
 class{'mesos::slave':
