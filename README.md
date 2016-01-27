@@ -1,4 +1,4 @@
-# cent6-foreman-puppet3
+# ubuntu14-mesos
 
 ## Description
 This Vagrant environment sets up a Mesos Cluster
@@ -14,7 +14,7 @@ This is working with the current software and versions
 git clone https://github.com/kovarus/vagrant-environments.git
 cd vagrant-environments
 git checkout ubuntu14-mesos
-./start_env.sh
+vagrant up
 ```
 
 ## To Do
