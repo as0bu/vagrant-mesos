@@ -15,6 +15,7 @@ git clone https://github.com/kovarus/vagrant-environments.git
 cd vagrant-environments
 git checkout ubuntu14-mesos
 vagrant up
+navigate to http://192.168.11.11:5050
 ```
 
 ## To Do
