@@ -25,6 +25,11 @@ Vagrant.configure(2) do |config|
   config.r10k.puppetfile_path = "environments/production/Puppetfile"
   config.r10k.module_path = "environments/production/modules"
 
+# Vagrant Cachier
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+
 # Create Masters
   (1..$master_num).each do |i|
     config.vm.define vm_name = "master%02d" % i do |master_config|

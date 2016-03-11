@@ -16,7 +16,7 @@ mod 'datacat',
 
 mod 'zookeeper',
   :git => 'https://github.com/deric/puppet-zookeeper.git',
-  :tag => 'v0.4.2'
+  :tag => 'v0.5.1'
   
 mod 'aptcacherng',
   :git => 'https://github.com/markhellewell/puppet-aptcacherng.git',
