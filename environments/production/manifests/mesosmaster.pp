@@ -37,6 +37,7 @@ class { 'mesos':
 class { 'mesos::cli':
   debug            => false,
   response_timeout => 5,
+  zookeeper        => 'zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos',
 }
 
 class { 'mesos::master':
@@ -61,4 +62,11 @@ class { 'marathon':
     Exec['apt update'],
     Class['mesos::repo'],
   ],
+}
+
+file { '/etc/profile.d/mesos-master.sh':
+  content => 'export MASTER=$(mesos-resolve zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos 2>/dev/null)',
+  mode    => '0755',
+  owner   => 'root',
+  group   => 'root',
 }

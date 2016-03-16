@@ -25,11 +25,11 @@ navigate to http://192.168.11.11:8080 for the Marathon UI
 The following will test the cluster
 ```
 vagrant ssh master01
-export MASTER=$(mesos-resolve zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos 2>/dev/null)
 mesos-execute --master=$MASTER --name='cluster-test' --command='sleep 40'
 # hit ctrl-z
 bg
-# check for process in the Mesos UI
+# check for process in the Mesos UI or
+mesos ps
 ```
 
 ## Issues
