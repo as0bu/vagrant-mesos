@@ -13,9 +13,8 @@ This is working with the current software and versions
 
 ## How to Start Environment
 ```
-git clone https://github.com/kovarus/vagrant-environments.git
-cd vagrant-environments
-git checkout ubuntu14-mesos
+git clone https://github.com/kovarus/vagrant-mesos.git
+cd vagrant-mesos
 vagrant up
 navigate to http://192.168.11.11:5050 for the Mesos UI
 navigate to http://192.168.11.11:8080 for the Marathon UI
