@@ -34,6 +34,11 @@ class { 'mesos':
   require => Exec['apt update'],
 }
 
+class { 'mesos::cli':
+  debug            => false,
+  response_timeout => 5,
+}
+
 class { 'mesos::master':
   zookeeper      => 'zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos',
   work_dir       => '/var/lib/mesos',
