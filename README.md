@@ -31,7 +31,7 @@ bg
 ```
 
 ## Issues
- - When the environment first comes up the following error message appears on
+ - Sometimes when the environment first comes up the following error message appears on
    the master leading the cluster
    ```
    Failed to shutdown socket with fd <number>: Transport endpoint is not connected
