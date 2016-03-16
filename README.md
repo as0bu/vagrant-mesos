@@ -7,6 +7,8 @@ This Vagrant environment sets up a Mesos Cluster
 This is working with the current software and versions
  - vagrant (version 1.7.4)
  - vagrant-r10k (0.4.1)
+ - vagrant-cachier (optional)
+   - Speeds up the deployment process
  - virtualbox (version 5.0.6)
 
 ## How to Start Environment
