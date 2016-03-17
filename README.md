@@ -41,5 +41,6 @@ mesos ps
    process.
    
 ## To Do
-
+ - Add Mesos DNS
+ - Add Chronos
 ## Notes
