@@ -26,3 +26,9 @@ class{'mesos::slave':
   },
   require => Class['docker'],
 }
+
+mesos::property { 'executor_registration_timeout':
+  value  => '5mins',
+  dir    => '/etc/mesos-slave',
+  notify => Service['mesos-slave'],
+}
