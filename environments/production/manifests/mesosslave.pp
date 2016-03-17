@@ -1,4 +1,6 @@
 
+include docker
+
 exec { 'apt update':
   command     => 'apt-get update && touch /var/lib/apt/vagrant-update',
   creates     => '/var/lib/apt/vagrant-update',
@@ -18,5 +20,9 @@ class{'mesos::slave':
   },
   resources => {
     'ports' => '[2000-65535]'
-  }
+  },
+  options => {
+    'containerizers' => 'docker,mesos',
+  },
+  require => Class['docker'],
 }

@@ -21,3 +21,11 @@ mod 'zookeeper',
 mod 'marathon',
   :git => 'https://github.com/praekeltfoundation/puppet-marathon.git',
   :tag => '0.4.1'
+
+mod 'epel',
+  :git => 'https://github.com/stahnma/puppet-module-epel.git',
+  :tag => '1.2.2'
+
+mod 'docker',
+  :git => 'https://github.com/garethr/garethr-docker.git',
+  :tag => 'v5.1.0'
