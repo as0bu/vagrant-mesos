@@ -18,6 +18,7 @@ cd vagrant-mesos
 vagrant up
 navigate to http://192.168.11.11:5050 for the Mesos UI
 navigate to http://192.168.11.11:8080 for the Marathon UI
+navigate to http://192.168.11.11:4400 for the Chronos UI
 ```
 
 ## How to Use the Environment
