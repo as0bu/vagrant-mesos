@@ -42,6 +42,5 @@ mesos ps
    
 ## To Do
  - Add Mesos DNS
- - Add Chronos
 
 ## Notes

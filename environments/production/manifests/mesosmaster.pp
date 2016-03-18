@@ -6,6 +6,10 @@ case $::hostname {
   default : { fail("hostname $::hostname not found!")}
 }
 
+package { ['ruby', 'ruby-dev']:
+  ensure => 'installed',
+}
+
 exec { 'accept oracle license':
   command => 'echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections',
   unless  => 'debconf-show oracle-java9-installer | grep accepted | grep true',
@@ -61,6 +65,20 @@ class { 'marathon':
   require     => [
     Exec['apt update'],
     Class['mesos::repo'],
+  ],
+}
+
+class { 'chronos':
+  master              => 'zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos',
+  zk_hosts            => '192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181',
+  conf_dir            => '/etc/chronos/conf',
+  http_port           => '4400',
+  manage_package_deps => true,
+  package_name        => 'chronos',
+  service_name        => 'chronos',
+  require =>          [
+    Exec['apt_update'],
+    Package['ruby'],
   ],
 }
 

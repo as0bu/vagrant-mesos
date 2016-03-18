@@ -29,3 +29,7 @@ mod 'epel',
 mod 'docker',
   :git => 'https://github.com/garethr/garethr-docker.git',
   :tag => 'v5.1.0'
+
+mod 'chronos',
+  :git => 'git://github.com/puppetlabs/puppetlabs-chronos.git',
+  :ref => 'v0.1.0'
