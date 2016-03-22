@@ -21,6 +21,12 @@ navigate to http://192.168.11.11:5050 for the Mesos UI
 navigate to http://192.168.11.11:8080 for the Marathon UI
 navigate to http://192.168.11.11:4400 for the Chronos UI
 ```
+To start the Mesos-DNS process use the following command
+```
+curl -X POST -H "Content-Type: application/json" -d @./configs/mesos-dns-app.json http://192.168.11.11:8080/v2/apps
+```
+This will spawn the mesos-dns docker container on the three slaves to accept
+DNS requests.
 
 ## How to Use the Environment
 The following will test the cluster
@@ -33,6 +39,15 @@ bg
 mesos ps
 ```
 
+To test Marathon and Mesos-DNS
+```
+curl -X POST -H "Content-Type: application/json" -d@./configs/nginx-test.json http://192.168.11.11:8080/v2/apps
+```
+With the nginx-test process running you should now be able to query Mesos-DNS
+```
+nslookup -type=srv _nginx-test._tcp.marathon.mesos 192.168.11.101
+```
+
 ## Issues
  - Sometimes when the environment first comes up the following error message appears on
    the master leading the cluster
@@ -41,8 +56,7 @@ mesos ps
    ```
    To resolve this log into the leading master and restart the _mesos-master_
    process.
-   
+
 ## To Do
- - Add Mesos DNS
 
 ## Notes
