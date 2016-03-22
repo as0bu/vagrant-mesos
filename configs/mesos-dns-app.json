@@ -1,0 +1,18 @@
+{
+    "id": "/mesos-dns",
+    "cpus": 0.2,
+    "mem": 128.0,
+    "instances": 3,
+    "env": {
+        "MESOS_ZK": "zk://192.168.11.11:2181,192.168.11.12:2181,192.168.11.13:2181/mesos",
+        "MESOS_DNS_EXTERNAL_SERVERS": "8.8.8.8,8.8.4.4"
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "tobilg/mesos-dns",
+            "network": "HOST"
+        }
+    },
+    "constraints": [["hostname", "UNIQUE"]]
+}

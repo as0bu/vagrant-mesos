@@ -1,0 +1,19 @@
+{
+    "id": "/nginx-test",
+    "cpus": 0.2,
+    "mem": 128.0,
+    "instances": 1,
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "nginx:stable-alpine",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    }
+}
