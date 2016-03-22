@@ -6,10 +6,6 @@ case $::hostname {
   default : { fail("hostname $::hostname not found!")}
 }
 
-package { ['ruby', 'ruby-dev']:
-  ensure => 'installed',
-}
-
 exec { 'accept oracle license':
   command => 'echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections',
   unless  => 'debconf-show oracle-java9-installer | grep accepted | grep true',
@@ -25,6 +21,11 @@ exec { 'apt update':
   command     => 'apt-get update',
   refreshonly => true,
   path        => '/usr/bin',
+}
+
+package { ['ruby', 'ruby-dev', 'oracle-java8-installer']:
+  ensure  => 'installed',
+  require => Exec['apt update'],
 }
 
 class { 'zookeeper':
@@ -65,6 +66,7 @@ class { 'marathon':
   require     => [
     Exec['apt update'],
     Class['mesos::repo'],
+    Package['oracle-java8-installer'],
   ],
 }
 
