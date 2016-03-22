@@ -2,7 +2,7 @@
 
 ## Description
 This Vagrant environment sets up a cluster with 3 masters and 3 slaves running
-Mesos, Marathon, and Chronos on Ubuntu 14.04.
+Mesos, Mesos-DNS, Marathon, and Chronos on Ubuntu 14.04.
 
 ## What do I need?
 This is working with the current software and versions
